@@ -1,0 +1,21 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create .env file from GitHub Secrets
+        run: |
+          mkdir -p config
+          # Using printf to preserve newlines and proper formatting
+          printf '%b' "${{ secrets.ENV }}" > config/.env
+          cat .env
