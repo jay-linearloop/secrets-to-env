@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Create .env File
 
 on:
   push:
@@ -6,16 +6,13 @@ on:
       - main
 
 jobs:
-  build:
+  create-env:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Create .env file from GitHub Secrets
+      - name: Create .env file from secrets
         run: |
-          mkdir -p config
-          # Using printf to preserve newlines and proper formatting
-          printf '%b' "${{ secrets.ENV }}" > config/.env
-          cat .env
+          printf '%b' "${{ secrets.ENV }}" > .env
